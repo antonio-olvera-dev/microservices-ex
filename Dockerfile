@@ -1,4 +1,4 @@
-FROM node:argon as main
+FROM node
 RUN mkdir -p /project
 WORKDIR /project
 COPY "." "."

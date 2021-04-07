@@ -1,8 +1,9 @@
+'use strict';
 const express = require("express");
 const axios = require("axios").default;
 const app = express();
-const router = express.Router();
-const router2 = express.Router();
+const cors = require('cors');
+app.use(cors());
 const port = 8080;
 
 app.use(express.json());
@@ -10,9 +11,10 @@ app.use(express.json());
 /**
  * Microservice node
  */
-let microserviceNode = "http://localhost:3000"; //This would be in the local registry
-router.post("/", async (req, res) => {
+let microserviceNode = "http://192.168.1.144:3000"; //This would be in the local registry
+app.post("/node", async (req, res) => {
   try {
+    console.log(req);
     microserviceNode = req.body.url;
     res.send(true);
   } catch (error) {
@@ -21,11 +23,10 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+app.get("/node", async (req, res) => {
   try {
-    console.log('dvs');
     const data = await axios.get(microserviceNode);
-    res.send(data);
+    res.send(data.data);
   } catch (error) {
     console.log(error);
     res.send("Microservice of node not lifted");
@@ -35,17 +36,12 @@ router.get("/", async (req, res) => {
 /**
  * Microservice main module
  */
-router2.get("/", (req, res) => {
+ app.get("/", (req, res) => {
   res.send("Microservice main module");
 });
 
-/**
- * Router
- */
-app.use("node", router);
-app.use("/", router2);
 
 
 app.listen(port, () => {
-  console.log(`Microservice main module run in http://localhost:${port}`);
+  console.log(`Microservice main module run in http://192.168.1.144:${port}`);
 });

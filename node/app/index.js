@@ -1,23 +1,24 @@
+'use strict';
 const express = require("express");
 const axios = require("axios").default;
 const app = express();
-const router = express.Router();
+const cors = require('cors');
+app.use(cors());
 const port = 3000;
 
 axios
-  .post("http://localhost:8080/node", { url: `http://localhost:${port}` })
+  .post("http://192.168.1.144:8080/node", { url: `http://192.168.1.144:${port}` })
   .then(function (response) {
   })
   .catch(function (error) {
     console.log(error);
   });
 
-router.get("/", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Microservice in Node.js");
 });
 
-app.use("/", router);
 
 app.listen(port, () => {
-  console.log(`Microservice in Node.js run in http://localhost:${port}`);
+  console.log(`Microservice in Node.js run in http://192.168.1.144:${port}`);
 });
