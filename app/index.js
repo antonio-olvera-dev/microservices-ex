@@ -3,18 +3,17 @@ const express = require("express");
 const axios = require("axios").default;
 const app = express();
 const cors = require('cors');
-app.use(cors());
 const port = 8080;
-
+const ip = "192.168.1.144";
+app.use(cors());
 app.use(express.json());
 
 /**
  * Microservice node
  */
-let microserviceNode = "http://192.168.1.144:3000"; //This would be in the local registry
+let microserviceNode = `http://${ip}:3000`; //This would be in the local registry
 app.post("/node", async (req, res) => {
   try {
-    console.log(req);
     microserviceNode = req.body.url;
     res.send(true);
   } catch (error) {
@@ -43,5 +42,5 @@ app.get("/node", async (req, res) => {
 
 
 app.listen(port, () => {
-  console.log(`Microservice main module run in http://192.168.1.144:${port}`);
+  console.log(`Microservice main module run in http://${ip}:${port}`);
 });

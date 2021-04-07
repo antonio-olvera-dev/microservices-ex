@@ -3,11 +3,12 @@ const express = require("express");
 const axios = require("axios").default;
 const app = express();
 const cors = require('cors');
-app.use(cors());
 const port = 3000;
+const ip = "192.168.1.144";
+app.use(cors());
 
 axios
-  .post("http://192.168.1.144:8080/node", { url: `http://192.168.1.144:${port}` })
+  .post(`http://${ip}:8080/node`, { url: `http://${ip}:${port}` })
   .then(function (response) {
   })
   .catch(function (error) {
@@ -20,5 +21,5 @@ app.get("/", (req, res) => {
 
 
 app.listen(port, () => {
-  console.log(`Microservice in Node.js run in http://192.168.1.144:${port}`);
+  console.log(`Microservice in Node.js run in http://${ip}:${port}`);
 });
